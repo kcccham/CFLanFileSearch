@@ -40,7 +40,7 @@
 <link rel="signin.css">
 </head>
 <body>
-<h2 id="top">Green60 File Search</h2>
+<h2 id="top">File Search Form </h2>
 
 <form action="index.cfm" method="post" class="form-inline">
   <div class="form-group">

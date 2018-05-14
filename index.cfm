@@ -60,11 +60,18 @@
 <cfset st_argument="#st_keyword#">
 <cfset index_count = 1>
 
+<!--- this will return everything 
+<cfset sQuery["query"]["filtered"]["query"]["match_all"] = {}>--->
+
 <!--- this will return a simple queried result --->
 <cfset sQuery["query"]["filtered"]["query"]["query_string"]["query"] = "#st_argument#">
 
+<!--- this will return a specific attribute, for example a product type 
+<cfset sQuery["query"]["filtered"]["query"]["match"]["ProductType"] = "Used">  --->
+
+
 <!--- let's do the search --->
-<cfset results = MyCFC.search("docs",'doc',sQuery,st_argument)>
+<cfset results = MyCFC.search('docs','doc',sQuery,st_argument) >
 
 <cfset qParts = #arrayOfStructuresToQuery(results.result.hits.hits)#>
 
@@ -121,6 +128,7 @@
 	<CFSET STRU_PATH= #stru_source['path']#>
 	<cfif StructKeyExists(STRU_PATH, "virtual")>
 	 <cfset st_virtual = #STRU_PATH['virtual']#>
+	 <cfset st_virtual = #replacenocase(st_virtual,'/','\','all')#>
 	 <cfset st_virtual = #ContentColorMark(st_virtual,st_argument)#>
 	<cfelse>
 	 <cfset st_virtual = "">
@@ -131,6 +139,7 @@
 
 
 <cfif st_virtual neq "">
+
 <li><a href="###st_virtual#"><strong>#st_virtual#</strong></a></Li>
 </cfif>
 </cfloop>
@@ -186,6 +195,7 @@
 	<CFSET STRU_PATH= #stru_source['path']#>
 	<cfif StructKeyExists(STRU_PATH, "virtual")>
 	 <cfset st_virtual = #STRU_PATH['virtual']#>
+	 <cfset st_virtual = #replacenocase(st_virtual,'/','\','all')#>
 	 <cfset st_virtual = #ContentColorMark(st_virtual,st_argument)#>
 	<cfelse>
 	 <cfset st_virtual = "">
@@ -203,7 +213,7 @@
 	<li>Last Modified: #dateformat(st_last_modified,'mm/dd/yyyy')# #timeformat(st_last_modified,'HH:mm')#</li>
 </cfif>
 <cfif #st_virtual# neq "">
-	<li>Location: <strong >#st_virtual#</strong></li>
+	<li>Location: <strong>K:#st_virtual#</strong></li>
 </cfif>
 
 <cfif #st_content# neq "">

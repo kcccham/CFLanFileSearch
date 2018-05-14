@@ -18,11 +18,11 @@
   
     <cfset checked = "&default_operator=AND">
     <cfif arguments.routing neq "">
-     <cfset pURL = "#pURL#?q=*#arguments.routing#* #checked#">
+     <cfset pURL = "#pURL#?size=500#checked#&sort=_score&q=*#arguments.routing#*">
     </cfif>
     <cfhttp port="#variables.searchPort#" url="#pURL#" method="GET">
       <cfhttpparam type="header" name="content-type" value="application/json">
- <!---     <cfhttpparam type="body" name="json" value="#SerializeJSON(sQuery)#">--->
+      <!---<cfhttpparam type="body" name="json" value="#SerializeJSON(sQuery)#">--->
     </cfhttp>
    
     <cfset var stResponse = {}>
